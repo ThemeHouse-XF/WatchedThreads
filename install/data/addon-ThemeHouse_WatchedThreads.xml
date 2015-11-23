@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="ThemeHouse_WatchedThreads" title="[⌂] Watched Threads" version_string="1.0.0" version_id="1447261019" url="http://xf.themehouse.io/" install_callback_class="ThemeHouse_Install" install_callback_method="install" uninstall_callback_class="ThemeHouse_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="ThemeHouse_Listener_ControllerPreDispatch" callback_method="controllerPreDispatch" active="1" hint="" description=""/>
+    <listener event_id="file_health_check" execute_order="10" callback_class="ThemeHouse_WatchedThreads_Listener_FileHealthCheck" callback_method="fileHealthCheck" active="1" hint="" description=""/>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="ThemeHouse_Listener_InitDependencies" callback_method="initDependencies" active="1" hint="" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications>
+    <modification template="watched_thread_reply" modification_key="th_watchedThreadReplyHtml_watchedThreads" description="Adds nodeTitle variable to watch thread reply HTML body." execution_order="10" enabled="1" action="preg_replace" search_location="body_html">
+      <find><![CDATA[#(<p style="margin-top: 0">{xen:phrase watched_thread_reply_email_html.*)(}</p>)#Us]]></find>
+      <replace><![CDATA[${1},
+	'node=<a href="{xen:link canonical:forums, {$thread}}" style="color: #176093; text-decoration: none">{$thread.node_title}</a>'${2}]]></replace>
+    </modification>
+    <modification template="watched_thread_reply_messagetext" modification_key="th_watchedThreadReplyMHtml_watchedThreads" description="Adds nodeTitle variable to watch thread reply HTML body." execution_order="10" enabled="1" action="preg_replace" search_location="body_html">
+      <find><![CDATA[#(<p style="margin-top: 0">{xen:phrase watched_thread_reply_email_html.*)(}</p>)#Us]]></find>
+      <replace><![CDATA[${1},
+	'node=<a href="{xen:link canonical:forums, {$thread}}" style="color: #176093; text-decoration: none">{$thread.node_title}</a>'${2}]]></replace>
+    </modification>
+    <modification template="watched_thread_reply_messagetext" modification_key="th_watchedThreadReplyMPlain_watchedThreads" description="Adds nodeTitle variable to watch thread reply plain text body." execution_order="10" enabled="1" action="preg_replace" search_location="body_text">
+      <find><![CDATA[#\s*}$#]]></find>
+      <replace><![CDATA[,
+	"node_title={$thread.node_title}"
+${0}]]></replace>
+    </modification>
+    <modification template="watched_thread_reply_messagetext" modification_key="th_watchedThreadReplyMSubject_watchedThreads" description="Adds nodeTitle variable to watch thread reply subject line." execution_order="10" enabled="1" action="preg_replace" search_location="subject">
+      <find><![CDATA[#}$#]]></find>
+      <replace><![CDATA[, "node_title={$thread.node_title}"${0}]]></replace>
+    </modification>
+    <modification template="watched_thread_reply" modification_key="th_watchedThreadReplyPlain_watchedThreads" description="Adds nodeTitle variable to watch thread reply plain text body." execution_order="10" enabled="1" action="preg_replace" search_location="body_text">
+      <find><![CDATA[#\s*}$#]]></find>
+      <replace><![CDATA[,
+	"node_title={$thread.node_title}"
+${0}]]></replace>
+    </modification>
+    <modification template="watched_thread_reply" modification_key="th_watchedThreadReplySubject_watchedThreads" description="Adds nodeTitle variable to watch thread reply subject line." execution_order="10" enabled="1" action="preg_replace" search_location="subject">
+      <find><![CDATA[#}$#]]></find>
+      <replace><![CDATA[, "node_title={$thread.node_title}"${0}]]></replace>
+    </modification>
+  </email_template_modifications>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases/>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications>
+    <modification template="footer" modification_key="th_copyrightNotice_watchedThreads" description="Copyright notice for [⌂] Watched Threads" execution_order="1" enabled="1" action="callback">
+      <find><![CDATA[/{xen:phrase (?:xenforo|extra)_copyright}/]]></find>
+      <replace><![CDATA[ThemeHouse_Listener_InitDependencies::copyrightNotice]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
